@@ -1,27 +1,10 @@
 import Card from './Card.jsx';
+import getRandomMembers from '../js/getRandomMembers.js';
+import shuffleArray from '../js/shuffleArray.js';
 import { useEffect, useState } from 'react';
 
 function Screen({ playRound }) {
   const [characters, setCharacters] = useState([]);
-
-  function shuffleArray(array) {
-    const copy = [...array];
-
-    // Shuffle using Fisher-Yates algorithm
-    for (let i = copy.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [copy[i], copy[j]] = [copy[j], copy[i]];
-    }
-
-    return copy;
-  }
-
-  function getRandomMembers(array, amount = 16) {
-    const shuffledArray = shuffleArray(array);
-
-    // Take the first "amount" of items
-    return shuffledArray.slice(0, amount);
-  }
 
   function shuffleCards() {
     const shuffledCards = shuffleArray(characters);
