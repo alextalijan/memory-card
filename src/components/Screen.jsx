@@ -4,15 +4,28 @@ import { useEffect, useState } from 'react';
 function Screen() {
   const [characters, setCharacters] = useState([]);
 
-  function getRandomMembers(array, amount = 16) {
+  function shuffleArray(array) {
+    const copy = [...array];
+
     // Shuffle using Fisher-Yates algorithm
-    for (let i = array.length - 1; i > 0; i--) {
+    for (let i = copy.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [copy[i], copy[j]] = [copy[j], copy[i]];
     }
 
+    return copy;
+  }
+
+  function getRandomMembers(array, amount = 16) {
+    const shuffledArray = shuffleArray(array);
+
     // Take the first "amount" of items
-    return array.slice(0, amount);
+    return shuffledArray.slice(0, amount);
+  }
+
+  function shuffleCards() {
+    const shuffledCards = shuffleArray(characters);
+    setCharacters(shuffledCards);
   }
 
   useEffect(() => {
@@ -55,6 +68,7 @@ function Screen() {
             key={character.id}
             name={character.name}
             imageUrl={character.imageUrl}
+            onClick={shuffleCards}
           />
         );
       })}

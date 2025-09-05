@@ -1,8 +1,8 @@
-export default function Card({ name, imageUrl }) {
+export default function Card({ name, imageUrl, onClick }) {
   return (
-    <div className="card">
+    <button className="card" onClick={onClick}>
       <img src={imageUrl} alt="" />
       <span>{name}</span>
-    </div>
+    </button>
   );
 }
