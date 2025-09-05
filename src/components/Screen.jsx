@@ -1,7 +1,7 @@
 import Card from './Card.jsx';
 import { useEffect, useState } from 'react';
 
-function Screen() {
+function Screen({ playRound }) {
   const [characters, setCharacters] = useState([]);
 
   function shuffleArray(array) {
@@ -26,6 +26,11 @@ function Screen() {
   function shuffleCards() {
     const shuffledCards = shuffleArray(characters);
     setCharacters(shuffledCards);
+  }
+
+  function handleCardClick(id) {
+    playRound(id);
+    shuffleCards();
   }
 
   useEffect(() => {
@@ -68,7 +73,7 @@ function Screen() {
             key={character.id}
             name={character.name}
             imageUrl={character.imageUrl}
-            onClick={shuffleCards}
+            onClick={() => handleCardClick(character.id)}
           />
         );
       })}
