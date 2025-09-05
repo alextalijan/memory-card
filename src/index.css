@@ -33,6 +33,18 @@ body {
   background-color: #f5f6fa;
 }
 
+.h1 {
+  font-size: 5rem;
+  margin: 2rem 3rem 3rem;
+  text-align: center;
+}
+
+.game-description {
+  font-size: 2rem;
+  margin: auto 3rem;
+  text-align: center;
+}
+
 .screen {
   width: 90%;
   display: grid;

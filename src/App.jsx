@@ -23,8 +23,8 @@ function App() {
 
   return (
     <>
-      <h1>Disney Memory Game</h1>
-      <p>
+      <h1 className="h1">Disney Memory Game</h1>
+      <p className="game-description">
         Get points by clicking on characters, but don't click on any more than
         once!
       </p>
