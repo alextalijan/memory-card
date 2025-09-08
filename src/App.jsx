@@ -1,7 +1,7 @@
 import Scoreboard from './components/Scoreboard.jsx';
 import Screen from './components/Screen.jsx';
 import triggerAnimation from './js/triggerAnimation.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [score, setScore] = useState(0);
@@ -19,12 +19,6 @@ function App() {
       soundEffect.volume = 0.5;
       soundEffect.play();
 
-      const scoreboard = document.querySelector('.scoreboard');
-      scoreboard.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-
       if (score > bestScore) {
         setBestScore(score);
       }
@@ -39,7 +33,6 @@ function App() {
       soundEffect.play();
     }
 
-    // TODO: fix error that starts the sound only when a card is clicked 17th time
     // If the game is over, end it
     if (chosenCharacterIds.length === 15) {
       soundEffect = new Audio('/public/sound-effects/win-sound.wav');
@@ -50,6 +43,17 @@ function App() {
       setChosenCharacterIds([]);
     }
   }
+
+  // When the DOM finishes updating, if the game was lost, scroll to the scoreboard
+  useEffect(() => {
+    if (score === 0) {
+      const scoreboard = document.querySelector('.scoreboard');
+      scoreboard.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [score]);
 
   return (
     <>
