@@ -50,8 +50,24 @@
   }
 }
 
+@keyframes greenFlash {
+  0% {
+    background-color: #f5f6fa; /* Or the element's original background */
+  }
+  50% {
+    background-color: rgba(0, 255, 51, 0.37);
+  }
+  100% {
+    background-color: #f5f6fa; /* Or the element's original background */
+  }
+}
+
 .flash-red {
   animation: redFlash 0.6s;
+}
+
+.flash-green {
+  animation: greenFlash 1s 3 alternate;
 }
 
 * {

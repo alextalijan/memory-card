@@ -38,6 +38,17 @@ function App() {
       soundEffect = new Audio('/public/sound-effects/success-sound.wav');
       soundEffect.play();
     }
+
+    // TODO: fix error that starts the sound only when a card is clicked 17th time
+    // If the game is over, end it
+    if (chosenCharacterIds.length === 15) {
+      soundEffect = new Audio('/public/sound-effects/win-sound.wav');
+      soundEffect.play();
+
+      const body = document.querySelector('body');
+      triggerAnimation(body, 'flash-green');
+      setChosenCharacterIds([]);
+    }
   }
 
   return (
