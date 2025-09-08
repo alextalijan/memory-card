@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 function Screen({ playRound }) {
   const [characters, setCharacters] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   function shuffleCards() {
     const shuffledCards = shuffleArray(characters);
@@ -19,6 +20,8 @@ function Screen({ playRound }) {
   useEffect(() => {
     const abortController = new AbortController(); // Initialize AbortController
     const signal = abortController.signal; // Get the signal
+
+    setLoading(true);
 
     fetch('https://api.disneyapi.dev/character', { signal }) // Pass the signal
       .then((response) => {
@@ -40,6 +43,7 @@ function Screen({ playRound }) {
         );
 
         setCharacters(randomCharacters);
+        setLoading(false);
       })
       .catch((error) => {
         console.log('API call failed:', error);
@@ -50,16 +54,20 @@ function Screen({ playRound }) {
 
   return (
     <div className="screen">
-      {characters.map((character) => {
-        return (
-          <Card
-            key={character.id}
-            name={character.name}
-            imageUrl={character.imageUrl}
-            onClick={() => handleCardClick(character.id)}
-          />
-        );
-      })}
+      {loading ? (
+        <div className="loading">Loading..</div>
+      ) : (
+        characters.map((character) => {
+          return (
+            <Card
+              key={character.id}
+              name={character.name}
+              imageUrl={character.imageUrl}
+              onClick={() => handleCardClick(character.id)}
+            />
+          );
+        })
+      )}
     </div>
   );
 }
