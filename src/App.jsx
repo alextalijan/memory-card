@@ -32,16 +32,6 @@ function App() {
       soundEffect = new Audio('/public/sound-effects/success-sound.wav');
       soundEffect.play();
     }
-
-    // If the game is over, end it
-    if (chosenCharacterIds.length === 15) {
-      soundEffect = new Audio('/public/sound-effects/win-sound.wav');
-      soundEffect.play();
-
-      const body = document.querySelector('body');
-      triggerAnimation(body, 'flash-green');
-      setChosenCharacterIds([]);
-    }
   }
 
   // When the DOM finishes updating, if the game was lost, scroll to the scoreboard
@@ -53,7 +43,19 @@ function App() {
         block: 'center',
       });
     }
-  }, [score]);
+    // else if all cards have been clicked, allow them to continue from scratch
+    else if (chosenCharacterIds.length === 16) {
+      const soundEffect = new Audio('/public/sound-effects/win-sound.wav');
+      soundEffect.play();
+
+      const body = document.querySelector('body');
+      triggerAnimation(body, 'flash-green');
+      setChosenCharacterIds([]);
+
+      const victoryModal = document.querySelector('.victory-modal');
+      triggerAnimation(victoryModal, 'show');
+    }
+  }, [score, chosenCharacterIds]);
 
   return (
     <>
@@ -64,6 +66,13 @@ function App() {
       </p>
       <Scoreboard score={score} bestScore={bestScore} />
       <Screen playRound={playRound} />
+      <div className="victory-modal">
+        <span>
+          <b>Congrats!</b>
+        </span>
+        <p>You've successfully clicked on all cards only once.</p>
+        <p>Start again. Your score will continue growing from here.</p>
+      </div>
     </>
   );
 }

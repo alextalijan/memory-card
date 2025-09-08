@@ -1,10 +1,10 @@
 function triggerAnimation(element, className) {
-  element.classList.add(className);
+  element.classList.toggle(className);
 
   element.addEventListener(
     'animationend',
     () => {
-      element.classList.remove(className);
+      element.classList.toggle(className);
     },
     { once: true } // makes sure listener runs only once
   );
